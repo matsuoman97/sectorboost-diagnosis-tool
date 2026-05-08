@@ -1,5 +1,3 @@
-# sectorboost-diagnosis-tool
-sectorboostの診断ツール
 # SectorBoost Diagnosis Tool
 
 SectorBoost公式サイトに埋め込むための簡易診断ツール。
