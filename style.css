@@ -1,1 +1,300 @@
+:root {
+  --color-bg: #f7f7f5;
+  --color-surface: #ffffff;
+  --color-text: #151515;
+  --color-muted: #696969;
+  --color-border: #e5e5e0;
+  --color-soft: #f1f1ee;
+  --color-dark: #111111;
+  --shadow-card: 0 24px 70px rgba(17, 17, 17, 0.08);
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --max-width: 760px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Yu Gothic", YuGothic,
+    "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
 
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--color-text);
+  background:
+    radial-gradient(circle at top left, rgba(0, 0, 0, 0.05), transparent 34rem),
+    var(--color-bg);
+  line-height: 1.7;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+.sb-page {
+  min-height: 100svh;
+  padding: 28px 16px;
+}
+
+.diagnosis {
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+}
+
+.diagnosis__header {
+  padding: 18px 2px 26px;
+}
+
+.eyebrow,
+.question__tag,
+.result__label {
+  margin: 0 0 12px;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 14px;
+  font-size: clamp(2rem, 9vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -0.05em;
+}
+
+.lead {
+  margin-bottom: 0;
+  color: var(--color-muted);
+  font-size: 0.98rem;
+}
+
+.noscript-message {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-muted);
+  background: var(--color-surface);
+}
+
+.diagnosis__card {
+  overflow: hidden;
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow-card);
+}
+
+.progress {
+  margin-bottom: 26px;
+}
+
+.progress__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.progress__track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-soft);
+}
+
+.progress__bar {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-dark);
+  transition: width 240ms ease;
+}
+
+.screen {
+  display: none;
+}
+
+.screen--active {
+  display: block;
+}
+
+.question__title,
+.result__title {
+  margin-bottom: 22px;
+  font-size: clamp(1.45rem, 6vw, 2.35rem);
+  line-height: 1.35;
+  letter-spacing: -0.04em;
+}
+
+.answers {
+  display: grid;
+  gap: 12px;
+}
+
+.answer-button {
+  width: 100%;
+  min-height: 68px;
+  padding: 18px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text);
+  background: var(--color-surface);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.answer-button:hover,
+.answer-button:focus-visible {
+  border-color: var(--color-dark);
+  background: #fbfbfa;
+  box-shadow: 0 12px 30px rgba(17, 17, 17, 0.08);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.answer-button__label {
+  display: block;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.answer-button__hint {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+}
+
+.result__summary {
+  margin-bottom: 24px;
+  color: var(--color-muted);
+}
+
+.result__grid {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.result-box {
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.result-box__number {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--color-muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.result-box h3 {
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.result-box p {
+  margin-bottom: 0;
+  color: var(--color-muted);
+  font-size: 0.94rem;
+}
+
+.cta-panel {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--color-soft);
+}
+
+.cta-panel p {
+  margin-bottom: 0;
+  font-weight: 700;
+}
+
+.cta-button,
+.secondary-button {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cta-button {
+  padding: 0 22px;
+  border: 1px solid var(--color-dark);
+  color: #ffffff;
+  background: var(--color-dark);
+  font-weight: 700;
+}
+
+.secondary-button {
+  padding: 0 18px;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+@media (min-width: 720px) {
+  .sb-page {
+    padding: 56px 24px;
+  }
+
+  .diagnosis__header {
+    padding-bottom: 34px;
+    text-align: center;
+  }
+
+  .lead {
+    max-width: 620px;
+    margin-inline: auto;
+    font-size: 1.05rem;
+  }
+
+  .diagnosis__card {
+    padding: 34px;
+  }
+
+  .result__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cta-panel {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+
+  .secondary-button {
+    grid-column: 2;
+  }
+}
