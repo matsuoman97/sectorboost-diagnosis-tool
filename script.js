@@ -1,244 +1,251 @@
 function initDiagnosis() {
+  const diagnosisTypes = {
+    flow: "売上導線の整理不足タイプ",
+    contact: "見込み客との接点不足タイプ",
+    cycle: "改善サイクル停滞タイプ",
+    ads: "広告運用の可視化不足タイプ",
+  };
+
+  const priority = ["flow", "contact", "cycle", "ads"];
+  const phases = [
+    "現状確認",
+    "導線整理",
+    "接点分析",
+    "改善状況確認",
+    "課題整理中",
+  ];
+  const analysisMessages = [
+    "導線構造を整理中…",
+    "改善ポイントを分析中…",
+    "接点状況を確認中…",
+    "課題優先度を可視化中…",
+    "現状整理レポートを生成中…",
+  ];
+
   const questions = [
     {
-      tag: "集客",
-      title: "現在、安定して新規の問い合わせを獲得できていますか？",
+      tag: "Q1 / 集客",
+      title: "毎月の集客数は安定していますか？",
+      tempo: "early",
       answers: [
-        {
-          label: "安定して獲得できている",
-          hint: "月ごとの波は小さい",
-          type: "conversion",
-          score: 0,
-        },
-        {
-          label: "月によって大きく変動する",
-          hint: "良い月と悪い月の差が大きい",
-          type: "acquisition",
-          score: 2,
-        },
-        {
-          label: "問い合わせ自体が少ない",
-          hint: "まず見込み客との接点が不足している",
-          type: "acquisition",
-          score: 3,
-        },
+        { label: "安定している", scores: {} },
+        { label: "波がある", scores: { contact: 2 } },
+        { label: "かなり不安定", scores: { contact: 3 } },
+        { label: "分からない", scores: { cycle: 2, flow: 1 } },
       ],
     },
     {
-      tag: "訴求",
-      title: "自社の強みや選ばれる理由は、Web上で明確に伝わっていますか？",
+      tag: "Q2 / 売上導線",
+      title: "問い合わせ〜購入までの流れは整理されていますか？",
+      tempo: "early",
       answers: [
-        {
-          label: "明確に伝えられている",
-          hint: "顧客からも理解されている",
-          type: "conversion",
-          score: 0,
-        },
-        {
-          label: "ある程度は伝えている",
-          hint: "競合との差別化はまだ弱い",
-          type: "offer",
-          score: 2,
-        },
-        {
-          label: "言語化できていない",
-          hint: "何を訴求すべきか整理できていない",
-          type: "offer",
-          score: 3,
-        },
+        { label: "明確", scores: {} },
+        { label: "一部曖昧", scores: { flow: 2 } },
+        { label: "かなり曖昧", scores: { flow: 3 } },
+        { label: "感覚で運用", scores: { flow: 3, cycle: 2 } },
+        { label: "分からない", scores: { flow: 2, cycle: 2 } },
       ],
     },
     {
-      tag: "導線",
-      title: "WebサイトやLPから相談・申込までの導線は整っていますか？",
+      tag: "Q3 / 広告",
+      title: "広告配信の成果を把握できていますか？",
+      tempo: "middle",
       answers: [
-        {
-          label: "迷わず行動できる導線がある",
-          hint: "CTAやフォームが分かりやすい",
-          type: "followup",
-          score: 0,
-        },
-        {
-          label: "導線はあるが改善余地がある",
-          hint: "離脱ポイントがありそう",
-          type: "conversion",
-          score: 2,
-        },
-        {
-          label: "導線設計ができていない",
-          hint: "次に何をすればよいか伝わりにくい",
-          type: "conversion",
-          score: 3,
-        },
+        { label: "数字で把握", scores: {} },
+        { label: "なんとなく把握", scores: { ads: 2 } },
+        { label: "あまり分からない", scores: { ads: 3, cycle: 1 } },
+        { label: "広告を止めている", scores: { contact: 1, ads: 2 } },
+        { label: "広告を出していない", scores: { contact: 2 } },
       ],
     },
     {
-      tag: "営業",
-      title: "問い合わせ後の追客や商談化の流れは仕組み化されていますか？",
+      tag: "Q4 / 訴求",
+      title: "「なぜ選ばれるか」を明確に伝えられていますか？",
+      tempo: "middle",
       answers: [
-        {
-          label: "仕組み化されている",
-          hint: "対応品質が安定している",
-          type: "acquisition",
-          score: 0,
-        },
-        {
-          label: "担当者ごとに対応が異なる",
-          hint: "属人的な運用になっている",
-          type: "followup",
-          score: 2,
-        },
-        {
-          label: "ほとんど仕組み化できていない",
-          hint: "機会損失が起きている可能性が高い",
-          type: "followup",
-          score: 3,
-        },
+        { label: "明確", scores: {} },
+        { label: "一応ある", scores: { flow: 1 } },
+        { label: "弱いと思う", scores: { flow: 3 } },
+        { label: "分からない", scores: { flow: 2, cycle: 1 } },
       ],
     },
     {
-      tag: "改善",
-      title: "広告・サイト・営業の改善状況を数字で確認できていますか？",
+      tag: "Q5 / 改善",
+      title: "売上改善のための検証・改善は継続できていますか？",
+      tempo: "final",
       answers: [
-        {
-          label: "主要な数字を確認している",
-          hint: "改善判断に使えている",
-          type: "offer",
-          score: 0,
-        },
-        {
-          label: "一部だけ確認している",
-          hint: "次の打ち手が曖昧になりやすい",
-          type: "conversion",
-          score: 2,
-        },
-        {
-          label: "数字で把握できていない",
-          hint: "感覚的な改善に留まっている",
-          type: "conversion",
-          score: 3,
-        },
+        { label: "定期的に実施", scores: {} },
+        { label: "時々やる", scores: { cycle: 2 } },
+        { label: "ほぼできていない", scores: { cycle: 3 } },
+        { label: "属人的", scores: { cycle: 3, flow: 1 } },
       ],
     },
   ];
 
   const results = {
-    balanced: {
-      title: "基本導線は整備済み・次の成長設計タイプ",
-      summary:
-        "大きなボトルネックは少なく、次はより再現性の高い成長導線へ磨き込む段階です。",
-      issue:
-        "現状は一定の基盤がありますが、集客・訴求・導線・追客のどこを伸ばすと成果が大きいかを明確にする余地があります。",
-      direction:
-        "主要な数字を定点観測し、伸びしろの大きい施策から優先順位を付けて改善を重ねましょう。",
-      support:
-        "SectorBoostでは、現状分析、改善優先度の整理、広告・LP・営業導線の継続改善を支援できます。",
+    flow: {
+      title: "売上導線の整理を優先したい状態です",
+      summary: [
+        "現在、売上改善に必要な導線整理が十分に機能していない可能性があります。",
+        "集客量だけを増やす前に、問い合わせから購入までの流れを整えることで改善余地が見つかるケースがあります。",
+      ],
+      current: [
+        "問い合わせ〜購入までの接続や、誰に何を伝えるかの整理がボトルネックになっている可能性があります。",
+      ],
+      problems: [
+        "問い合わせは来るが成約に繋がりにくい",
+        "サービスの強みが十分に伝わっていない",
+        "導線が属人的になっている",
+      ],
+      causes: ["導線設計不足", "訴求整理不足", "商談前後の判断基準が曖昧"],
+      direction: [
+        "まずは「誰に・何を・どう伝えるか」を整理し、売上につながる導線設計を見直すことが重要です。",
+        "広告改善より先に導線・接点・整理設計を見直すことで、次に改善すべき箇所が明確になります。",
+      ],
     },
-    acquisition: {
-      title: "見込み客との接点不足タイプ",
-      summary:
-        "売上が伸びにくい主因は、必要な数の見込み客に継続して接触できていないことにあります。",
-      issue:
-        "広告・SEO・紹介導線などの入口が限定的で、問い合わせ数が安定しにくい状態です。",
-      direction:
-        "ターゲットを絞り、最初に接点を作るチャネルと訴求を整理して、継続的に流入を生む設計へ見直しましょう。",
-      support:
-        "SectorBoostでは、集客チャネルの整理、広告導線の設計、LP改善まで一体で支援できます。",
+    contact: {
+      title: "見込み客との接点設計を見直したい状態です",
+      summary: [
+        "現在は、サービス自体の課題というより、見込み客との接点量や接点設計が不足している可能性があります。",
+        "良いサービスでも、比較検討の候補に入る機会が少ないと売上改善につながりにくくなります。",
+      ],
+      current: [
+        "どこで見込み客と接点を作るか、どの導線へつなげるかの設計を整理する余地があります。",
+      ],
+      problems: [
+        "認知が広がらない",
+        "流入数が安定しない",
+        "良いサービスでも比較対象に入らない",
+      ],
+      causes: [
+        "接点不足",
+        "流入チャネルの偏り",
+        "LPや問い合わせ導線との接続不足",
+      ],
+      direction: [
+        "まずは「どこで接点を作るか」を整理し、広告・SNS・LPなどの流入設計を見直すことが重要です。",
+        "単に露出を増やすのではなく、接点から相談までの流れを一つの導線として設計すると改善判断がしやすくなります。",
+      ],
     },
-    offer: {
-      title: "選ばれる理由の言語化不足タイプ",
-      summary:
-        "サービスの魅力はあるものの、顧客が比較検討する場面で強みが伝わり切っていない可能性があります。",
-      issue:
-        "競合との差別化、導入メリット、実績の見せ方が曖昧で、相談前に離脱されやすい状態です。",
-      direction:
-        "顧客課題・提供価値・導入後の変化を整理し、Web上のコピーや構成へ反映することが重要です。",
-      support:
-        "SectorBoostでは、訴求整理、ファーストビュー改善、導入事例やCTA設計を支援できます。",
+    cycle: {
+      title: "改善サイクルを整える余地があります",
+      summary: [
+        "現在は、改善施策そのものよりも「検証・改善を継続できる状態」が不足している可能性があります。",
+        "施策が単発で終わると、成果が出た理由・出なかった理由が残りにくく、次の判断が感覚的になりやすくなります。",
+      ],
+      current: [
+        "現状把握、改善優先度、検証の流れを整理することで、再現性のある改善に近づける状態です。",
+      ],
+      problems: [
+        "感覚的な判断になりやすい",
+        "改善施策が単発で終わる",
+        "成果の再現性が低くなる",
+      ],
+      causes: ["改善優先度不明", "数値確認の不足", "検証フローの属人化"],
+      direction: [
+        "まずは現状を整理し、「何を改善すべきか」を明確化した上で、継続的に検証できる状態を作ることが重要です。",
+        "小さな検証を積み上げられる形にすると、広告・導線・訴求のどこに改善余地があるかを判断しやすくなります。",
+      ],
     },
-    conversion: {
-      title: "申込導線・改善サイクル未整備タイプ",
-      summary:
-        "興味を持った見込み客を相談・申込へ進める導線と、数字に基づく改善が不足している可能性があります。",
-      issue:
-        "CTA、フォーム、ページ構成、計測指標が分断され、どこを改善すべきか判断しにくい状態です。",
-      direction:
-        "ユーザーが迷わず次の行動へ進める導線を作り、表示数・クリック数・CV数を見ながら改善しましょう。",
-      support:
-        "SectorBoostでは、LP構成改善、CTA最適化、計測設計、改善レポート作成まで伴走できます。",
-    },
-    followup: {
-      title: "追客・商談化の仕組み不足タイプ",
-      summary:
-        "問い合わせ後の対応品質や追客フローが属人的になり、受注機会を逃している可能性があります。",
-      issue:
-        "返信速度、ヒアリング項目、次回提案、フォロー連絡が標準化されていない状態です。",
-      direction:
-        "問い合わせ後の初動、商談前後の情報整理、フォロータイミングをテンプレート化しましょう。",
-      support:
-        "SectorBoostでは、問い合わせ後の導線設計、営業資料改善、追客フローの整備を支援できます。",
+    ads: {
+      title: "広告成果の可視化を整えたい状態です",
+      summary: [
+        "現在は、広告成果や数値の把握不足によって、改善判断が難しくなっている可能性があります。",
+        "数値が見えないまま運用すると、広告費の最適化や導線改善の優先順位が曖昧になりやすくなります。",
+      ],
+      current: [
+        "広告の成果だけでなく、その後の導線・訴求・問い合わせ状況まで含めて整理する余地があります。",
+      ],
+      problems: [
+        "広告費の最適化ができない",
+        "成果判断が感覚的になる",
+        "改善ポイントが見えづらい",
+      ],
+      causes: ["広告成果の可視化不足", "計測設計不足", "導線全体との接続不足"],
+      direction: [
+        "まずは広告成果を可視化し、「どこに課題があるか」を整理することが重要です。",
+        "広告単体ではなく、導線・訴求・設計全体を含めて見ることで、改善すべきポイントが明確になります。",
+      ],
     },
   };
 
   const state = {
     currentQuestion: 0,
-    totalScore: 0,
     scores: {
-      acquisition: 0,
-      offer: 0,
-      conversion: 0,
-      followup: 0,
+      flow: 0,
+      contact: 0,
+      cycle: 0,
+      ads: 0,
     },
   };
 
+  const diagnosisCard = document.getElementById("diagnosis-app");
   const questionScreen = document.getElementById("question-screen");
+  const analysisScreen = document.getElementById("analysis-screen");
   const resultScreen = document.getElementById("result-screen");
   const progressLabel = document.getElementById("progress-label");
-  const progressPercent = document.getElementById("progress-percent");
+  const progressPhase = document.getElementById("progress-phase");
   const progressBar = document.getElementById("progress-bar");
   const questionTag = document.getElementById("question-tag");
   const questionTitle = document.getElementById("question-title");
   const answersContainer = document.getElementById("answers");
+  const analysisMessage = document.getElementById("analysis-message");
   const restartButton = document.getElementById("restart-button");
+
+  function scrollToTop() {
+    document
+      .getElementById("sectorboost-diagnosis")
+      .scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function updateProgress(value) {
+    progressBar.style.width = `${value}%`;
+  }
+
+  function getAnalysisMessage() {
+    return analysisMessages[
+      Math.floor(Math.random() * analysisMessages.length)
+    ];
+  }
 
   function renderQuestion() {
     const question = questions[state.currentQuestion];
     const progressValue = Math.round(
-      (state.currentQuestion / questions.length) * 100,
+      ((state.currentQuestion + 1) / questions.length) * 100,
     );
 
+    diagnosisCard.dataset.tempo = question.tempo;
     progressLabel.textContent = `質問 ${state.currentQuestion + 1} / ${questions.length}`;
-    progressPercent.textContent = `${progressValue}%`;
-    progressBar.style.width = `${progressValue}%`;
-    questionTag.textContent = question.tag;
-    questionTitle.textContent = question.title;
-    answersContainer.innerHTML = "";
+    progressPhase.textContent = phases[state.currentQuestion];
+    updateProgress(progressValue);
+    questionScreen.classList.remove("screen--fade-in");
 
-    question.answers.forEach((answer) => {
-      const button = document.createElement("button");
-      button.className = "answer-button";
-      button.type = "button";
-      const label = document.createElement("span");
-      label.className = "answer-button__label";
-      label.textContent = answer.label;
+    window.requestAnimationFrame(() => {
+      questionTag.textContent = question.tag;
+      questionTitle.textContent = question.title;
+      answersContainer.innerHTML = "";
 
-      const hint = document.createElement("span");
-      hint.className = "answer-button__hint";
-      hint.textContent = answer.hint;
+      question.answers.forEach((answer) => {
+        const button = document.createElement("button");
+        button.className = "answer-button";
+        button.type = "button";
+        button.textContent = answer.label;
+        button.addEventListener("click", () => handleAnswer(answer));
+        answersContainer.appendChild(button);
+      });
 
-      button.append(label, hint);
-      button.addEventListener("click", () => handleAnswer(answer));
-      answersContainer.appendChild(button);
+      questionScreen.classList.add("screen--fade-in");
     });
   }
 
   function handleAnswer(answer) {
-    state.scores[answer.type] += answer.score;
-    state.totalScore += answer.score;
+    Object.entries(answer.scores).forEach(([type, score]) => {
+      state.scores[type] += score;
+    });
     state.currentQuestion += 1;
 
     if (state.currentQuestion >= questions.length) {
-      showResult();
+      showAnalysis();
       return;
     }
 
@@ -246,40 +253,81 @@ function initDiagnosis() {
   }
 
   function getPrimaryResultType() {
-    if (state.totalScore <= 2) {
-      return "balanced";
-    }
+    return priority.reduce((currentBest, type) => {
+      if (state.scores[type] > state.scores[currentBest]) {
+        return type;
+      }
 
-    return Object.entries(state.scores).sort((a, b) => b[1] - a[1])[0][0];
+      return currentBest;
+    }, priority[0]);
+  }
+
+  function renderList(containerId, items) {
+    const list = document.getElementById(containerId);
+    list.innerHTML = "";
+
+    items.forEach((itemText) => {
+      const item = document.createElement("li");
+      item.textContent = itemText;
+      list.appendChild(item);
+    });
+  }
+
+  function renderParagraphs(containerId, paragraphs) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+
+    paragraphs.forEach((paragraph) => {
+      const text = document.createElement("p");
+      text.textContent = paragraph;
+      container.appendChild(text);
+    });
+  }
+
+  function showAnalysis() {
+    progressLabel.textContent = "質問 5 / 5";
+    progressPhase.textContent = "課題整理中";
+    updateProgress(100);
+    analysisMessage.textContent = getAnalysisMessage();
+    questionScreen.classList.remove("screen--active");
+    analysisScreen.classList.add("screen--active", "screen--fade-in");
+    scrollToTop();
+
+    window.setTimeout(showResult, 1300);
   }
 
   function showResult() {
     const result = results[getPrimaryResultType()];
 
-    progressLabel.textContent = "診断完了";
-    progressPercent.textContent = "100%";
-    progressBar.style.width = "100%";
+    diagnosisCard.dataset.tempo = "report";
+    progressLabel.textContent = "整理完了";
+    progressPhase.textContent = "分析レポート";
+    updateProgress(100);
 
     document.getElementById("result-title").textContent = result.title;
-    document.getElementById("result-summary").textContent = result.summary;
-    document.getElementById("result-issue").textContent = result.issue;
-    document.getElementById("result-direction").textContent = result.direction;
-    document.getElementById("result-support").textContent = result.support;
+    renderParagraphs("result-summary", result.summary);
+    renderParagraphs("result-current", result.current);
+    renderList("result-problems", result.problems);
+    renderList("result-causes", result.causes);
+    renderParagraphs("result-direction", result.direction);
 
     questionScreen.classList.remove("screen--active");
-    resultScreen.classList.add("screen--active");
+    analysisScreen.classList.remove("screen--active", "screen--fade-in");
+    resultScreen.classList.add("screen--active", "screen--fade-in");
+    scrollToTop();
   }
 
   function restartDiagnosis() {
     state.currentQuestion = 0;
-    state.totalScore = 0;
     Object.keys(state.scores).forEach((key) => {
       state.scores[key] = 0;
     });
 
-    resultScreen.classList.remove("screen--active");
+    analysisScreen.classList.remove("screen--active", "screen--fade-in");
+    resultScreen.classList.remove("screen--active", "screen--fade-in");
     questionScreen.classList.add("screen--active");
     renderQuestion();
+    scrollToTop();
   }
 
   restartButton.addEventListener("click", restartDiagnosis);
