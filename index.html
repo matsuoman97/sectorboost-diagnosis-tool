@@ -7,7 +7,7 @@
       name="description"
       content="SectorBoost公式サイトに埋め込むための売上課題簡易診断ツール"
     />
-    <title>SectorBoost 売上課題診断</title>
+    <title>SectorBoost 売上課題整理ツール</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -15,9 +15,9 @@
       <section class="diagnosis" aria-labelledby="diagnosis-title">
         <div class="diagnosis__header">
           <p class="eyebrow">SectorBoost Diagnosis</p>
-          <h1 id="diagnosis-title">売上が伸びない原因を5問で見える化</h1>
+          <h1 id="diagnosis-title">売上が伸びない原因を5問で整理</h1>
           <p class="lead">
-            現在の集客・営業導線をかんたんに確認し、優先して整えるべき課題と改善の方向性を診断します。
+            集客・導線・広告・改善体制の状況を確認し、いま優先して見直すべき課題を整理します。
           </p>
         </div>
 
@@ -31,17 +31,21 @@
           <div class="progress" aria-label="診断の進捗">
             <div class="progress__meta">
               <span id="progress-label">質問 1 / 5</span>
-              <span id="progress-percent">0%</span>
+              <span id="progress-phase">現状確認</span>
             </div>
             <div class="progress__track" aria-hidden="true">
-              <span class="progress__bar" id="progress-bar"></span>
+              <span
+                class="progress__bar"
+                id="progress-bar"
+                style="width: 20%"
+              ></span>
             </div>
           </div>
 
           <div class="screen screen--active" id="question-screen">
-            <p class="question__tag" id="question-tag">集客</p>
+            <p class="question__tag" id="question-tag">Q1 / 集客</p>
             <h2 class="question__title" id="question-title">
-              現在、安定して新規の問い合わせを獲得できていますか？
+              毎月の集客数は安定していますか？
             </h2>
             <div
               class="answers"
@@ -51,37 +55,61 @@
             ></div>
           </div>
 
-          <div class="screen" id="result-screen" aria-live="polite">
-            <p class="result__label">診断結果</p>
-            <h2 class="result__title" id="result-title"></h2>
-            <p class="result__summary" id="result-summary"></p>
+          <div
+            class="screen analysis-screen"
+            id="analysis-screen"
+            aria-live="polite"
+          >
+            <p class="analysis-screen__label">Analyzing</p>
+            <h2>分析中...</h2>
+            <p id="analysis-message">導線構造を整理中…</p>
+          </div>
 
-            <div class="result__grid">
-              <article class="result-box">
-                <span class="result-box__number">01</span>
-                <h3>現在の課題</h3>
-                <p id="result-issue"></p>
+          <div
+            class="screen result-proposal"
+            id="result-screen"
+            aria-live="polite"
+          >
+            <p class="result__label">SectorBoost 課題整理レポート</p>
+            <h2 class="result__title" id="result-title"></h2>
+            <div class="result__summary" id="result-summary"></div>
+
+            <div class="proposal-list">
+              <article class="proposal-section">
+                <span class="proposal-section__number">01</span>
+                <h3>現状整理</h3>
+                <div id="result-current"></div>
               </article>
-              <article class="result-box">
-                <span class="result-box__number">02</span>
-                <h3>改善の方向性</h3>
-                <p id="result-direction"></p>
+              <article class="proposal-section">
+                <span class="proposal-section__number">02</span>
+                <h3>起きやすい状態</h3>
+                <ul id="result-problems"></ul>
               </article>
-              <article class="result-box">
-                <span class="result-box__number">03</span>
-                <h3>SectorBoostでできること</h3>
-                <p id="result-support"></p>
+              <article class="proposal-section">
+                <span class="proposal-section__number">03</span>
+                <h3>よくある原因</h3>
+                <ul id="result-causes"></ul>
+              </article>
+              <article class="proposal-section proposal-section--support">
+                <span class="proposal-section__number">04</span>
+                <h3>改善方向性</h3>
+                <div id="result-direction"></div>
               </article>
             </div>
 
             <div class="cta-panel" id="contact">
-              <p>診断結果をもとに、貴社の売上導線を具体的に整理しませんか。</p>
+              <p class="cta-panel__note">
+                まだ課題が明確でない段階でも問題ありません。無理な広告提案ではなく、現状整理ベースでお話しています。
+              </p>
+              <p class="cta-panel__lead">
+                まずは現状を整理し、優先して見直すべきポイントを一緒に確認しませんか。
+              </p>
               <a
                 class="cta-button"
-                href="#contact"
-                aria-label="SectorBoostに無料相談する"
+                href="https://sectorboost.jp/"
+                aria-label="SectorBoostに課題整理の相談をする"
               >
-                無料相談を申し込む
+                まずは課題の整理から相談する
               </a>
               <button
                 class="secondary-button"
