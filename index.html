@@ -73,6 +73,11 @@
             <p class="result__label">SectorBoost ボトルネック仮説レポート</p>
             <h2 class="result__title" id="result-title"></h2>
             <div class="result__summary" id="result-summary"></div>
+            <div class="report-actions">
+              <button class="print-button" type="button" id="pdf-button">
+                結果をPDF保存
+              </button>
+            </div>
 
             <div class="proposal-list">
               <article class="proposal-section">
@@ -112,13 +117,54 @@
                 <li>導線の問題なのか</li>
                 <li>訴求の問題なのか</li>
               </ul>
-              <a
+              <button
                 class="cta-button"
-                href="https://sectorboost.jp/"
-                aria-label="SectorBoostに課題整理の相談をする"
+                type="button"
+                id="consultation-toggle"
+                aria-controls="consultation-form"
+                aria-expanded="false"
               >
                 ボトルネック検証について相談する
-              </a>
+              </button>
+
+              <form class="consultation-form" id="consultation-form" hidden>
+                <div class="consultation-form__header">
+                  <h3>ボトルネック検証の相談をする</h3>
+                  <p>
+                    診断結果をもとに、広告配信で確認すべきポイントを整理します。
+                  </p>
+                </div>
+                <label class="form-field" for="company-name">
+                  <span>会社名</span>
+                  <input
+                    id="company-name"
+                    name="company"
+                    type="text"
+                    required
+                  />
+                </label>
+                <label class="form-field" for="contact-name">
+                  <span>お名前</span>
+                  <input id="contact-name" name="name" type="text" required />
+                </label>
+                <label class="form-field" for="email-address">
+                  <span>メールアドレス</span>
+                  <input
+                    id="email-address"
+                    name="email"
+                    type="email"
+                    required
+                  />
+                </label>
+                <label class="form-field" for="message">
+                  <span>相談内容 <small>任意</small></span>
+                  <textarea id="message" name="message" rows="4"></textarea>
+                </label>
+                <button class="form-submit-button" type="submit">
+                  メール作成画面を開く
+                </button>
+              </form>
+
               <button
                 class="secondary-button"
                 type="button"

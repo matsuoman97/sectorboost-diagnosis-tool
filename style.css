@@ -276,6 +276,27 @@ h1 {
   margin-bottom: 0;
 }
 
+.report-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: -12px 0 24px;
+}
+
+.print-button {
+  padding: 4px 6px;
+  border: 0;
+  color: var(--color-muted);
+  background: transparent;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.print-button:hover,
+.print-button:focus-visible {
+  color: var(--color-text);
+  outline: none;
+}
+
 .proposal-list {
   display: grid;
   gap: 14px;
@@ -397,6 +418,83 @@ h1 {
   font-weight: 700;
 }
 
+.consultation-form {
+  display: grid;
+  gap: 14px;
+  padding-top: 8px;
+}
+
+.consultation-form[hidden] {
+  display: none;
+}
+
+.consultation-form__header {
+  display: grid;
+  gap: 4px;
+  padding-top: 4px;
+}
+
+.consultation-form__header h3 {
+  margin-bottom: 0;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.consultation-form__header p {
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.86rem;
+}
+
+.form-field {
+  display: grid;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.form-field small {
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.76rem;
+  font-weight: 400;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+  font: inherit;
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: rgba(255, 255, 255, 0.48);
+  outline: none;
+}
+
+.form-submit-button {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 999px;
+  color: #ffffff;
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .secondary-button {
   width: fit-content;
   min-height: auto;
@@ -446,12 +544,12 @@ h1 {
 
   .cta-panel__note,
   .cta-panel__lead,
-  .cta-panel__checks {
+  .cta-panel__checks,
+  .consultation-form {
     grid-column: 1 / -1;
   }
 
-  .cta-button,
-  .secondary-button {
+  .cta-button {
     width: auto;
     min-width: 240px;
   }
@@ -483,5 +581,28 @@ h1 {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+@media print {
+  .diagnosis__header,
+  .progress,
+  .cta-panel,
+  .report-actions {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  .sb-page {
+    min-height: auto;
+    padding: 0;
+  }
+
+  .diagnosis__card {
+    border: 0;
+    box-shadow: none;
   }
 }
