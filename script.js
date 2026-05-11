@@ -1,170 +1,276 @@
 function initDiagnosis() {
-  const diagnosisTypes = {
-    flow: "売上導線の整理不足タイプ",
-    contact: "見込み客との接点不足タイプ",
-    cycle: "改善サイクル停滞タイプ",
-    ads: "広告運用の可視化不足タイプ",
-  };
-
-  const priority = ["flow", "contact", "cycle", "ads"];
+  const priority = [
+    "traffic",
+    "flow",
+    "message",
+    "offer",
+    "target",
+    "trust",
+    "cycle",
+  ];
   const phases = [
-    "現状確認",
-    "導線整理",
-    "接点分析",
-    "改善状況確認",
-    "課題整理中",
+    "流入確認",
+    "導線確認",
+    "訴求確認",
+    "条件確認",
+    "対象確認",
+    "信頼確認",
+    "検証確認",
   ];
   const analysisMessages = [
-    "導線構造を整理中…",
-    "改善ポイントを分析中…",
-    "接点状況を確認中…",
-    "課題優先度を可視化中…",
+    "売上構造の仮説を整理中…",
+    "導線と接点の関係を確認中…",
+    "検証すべきポイントを整理中…",
+    "ボトルネック候補を絞り込み中…",
     "現状整理レポートを生成中…",
   ];
 
   const questions = [
     {
       tag: "Q1 / 集客",
-      title: "毎月の集客数は安定していますか？",
+      title: "新規の流入は安定していますか？",
       tempo: "early",
       answers: [
         { label: "安定している", scores: {} },
-        { label: "波がある", scores: { contact: 2 } },
-        { label: "かなり不安定", scores: { contact: 3 } },
-        { label: "分からない", scores: { cycle: 2, flow: 1 } },
+        { label: "波がある", scores: { traffic: 2, cycle: 1 } },
+        { label: "少ない", scores: { traffic: 3 } },
+        { label: "把握できていない", scores: { traffic: 2, cycle: 2 } },
       ],
     },
     {
-      tag: "Q2 / 売上導線",
-      title: "問い合わせ〜購入までの流れは整理されていますか？",
+      tag: "Q2 / 導線",
+      title: "スマホで見た時、問い合わせや購入まで迷わず進めますか？",
       tempo: "early",
       answers: [
-        { label: "明確", scores: {} },
-        { label: "一部曖昧", scores: { flow: 2 } },
-        { label: "かなり曖昧", scores: { flow: 3 } },
-        { label: "感覚で運用", scores: { flow: 3, cycle: 2 } },
-        { label: "分からない", scores: { flow: 2, cycle: 2 } },
+        { label: "迷わず進める", scores: {} },
+        { label: "一部迷う箇所がある", scores: { flow: 2 } },
+        { label: "かなり分かりにくい", scores: { flow: 3 } },
+        { label: "確認できていない", scores: { flow: 2, cycle: 1 } },
       ],
     },
     {
-      tag: "Q3 / 広告",
-      title: "広告配信の成果を把握できていますか？",
+      tag: "Q3 / 訴求",
+      title: "サービスの強みは一言で伝わりますか？",
       tempo: "middle",
       answers: [
-        { label: "数字で把握", scores: {} },
-        { label: "なんとなく把握", scores: { ads: 2 } },
-        { label: "あまり分からない", scores: { ads: 3, cycle: 1 } },
-        { label: "広告を止めている", scores: { contact: 1, ads: 2 } },
-        { label: "広告を出していない", scores: { contact: 2 } },
+        { label: "明確に伝わる", scores: {} },
+        { label: "なんとなく伝わる", scores: { message: 2 } },
+        { label: "伝わりにくい", scores: { message: 3 } },
+        {
+          label: "写真・実績・事例が不足している",
+          scores: { message: 2, trust: 2 },
+        },
       ],
     },
     {
-      tag: "Q4 / 訴求",
-      title: "「なぜ選ばれるか」を明確に伝えられていますか？",
+      tag: "Q4 / オファー",
+      title: "価格や初回相談の条件は、検討しやすい設計ですか？",
       tempo: "middle",
       answers: [
-        { label: "明確", scores: {} },
-        { label: "一応ある", scores: { flow: 1 } },
-        { label: "弱いと思う", scores: { flow: 3 } },
-        { label: "分からない", scores: { flow: 2, cycle: 1 } },
+        { label: "検討しやすい", scores: {} },
+        { label: "少しハードルがある", scores: { offer: 2 } },
+        { label: "重く見えていると思う", scores: { offer: 3 } },
+        { label: "判断材料が不足している", scores: { offer: 2, trust: 1 } },
       ],
     },
     {
-      tag: "Q5 / 改善",
-      title: "売上改善のための検証・改善は継続できていますか？",
+      tag: "Q5 / ターゲット",
+      title: "問い合わせる人と、成約しやすい相手は一致していますか？",
+      tempo: "middle",
+      answers: [
+        { label: "おおむね一致している", scores: {} },
+        { label: "少しズレがある", scores: { target: 2 } },
+        {
+          label: "問い合わせはあるが成約しにくい",
+          scores: { target: 3, flow: 1 },
+        },
+        { label: "よく分からない", scores: { target: 2, cycle: 1 } },
+      ],
+    },
+    {
+      tag: "Q6 / 信頼",
+      title: "初見で安心できる実績や会社感は伝わっていますか？",
+      tempo: "middle",
+      answers: [
+        { label: "十分に伝わっている", scores: {} },
+        { label: "最低限はある", scores: { trust: 1 } },
+        { label: "不足している", scores: { trust: 3 } },
+        { label: "比較されると弱い", scores: { trust: 2, message: 1 } },
+      ],
+    },
+    {
+      tag: "Q7 / 改善",
+      title: "数字を見ながら改善判断できていますか？",
       tempo: "final",
       answers: [
-        { label: "定期的に実施", scores: {} },
-        { label: "時々やる", scores: { cycle: 2 } },
-        { label: "ほぼできていない", scores: { cycle: 3 } },
-        { label: "属人的", scores: { cycle: 3, flow: 1 } },
+        { label: "できている", scores: {} },
+        { label: "一部だけ見ている", scores: { cycle: 2 } },
+        { label: "感覚に頼っている", scores: { cycle: 3 } },
+        { label: "広告やSNSを止めたまま", scores: { cycle: 2, traffic: 1 } },
       ],
     },
   ];
 
   const results = {
-    flow: {
-      title: "売上導線の整理を優先したい状態です",
+    traffic: {
+      title: "見込み客との接点不足が考えられます",
       summary: [
-        "現在、売上改善に必要な導線整理が十分に機能していない可能性があります。",
-        "集客量だけを増やす前に、問い合わせから購入までの流れを整えることで改善余地が見つかるケースがあります。",
+        "現状、商品や導線そのものよりも、まず見込み客に届く接点量が不足している可能性があります。",
+        "広告検証によって、接点を増やした時に反応が出るかを確認できます。",
       ],
-      current: [
-        "問い合わせ〜購入までの接続や、誰に何を伝えるかの整理がボトルネックになっている可能性があります。",
+      hypothesis: [
+        "広告配信後に流入や問い合わせが増える場合、主なボトルネックは接点不足だった可能性があります。",
       ],
-      problems: [
-        "問い合わせは来るが成約に繋がりにくい",
-        "サービスの強みが十分に伝わっていない",
-        "導線が属人的になっている",
+      states: [
+        "商品やサービス自体は悪くない可能性がある",
+        "ただし、比較検討に入る前の接点が不足している",
+        "広告配信で反応の有無を確認する余地がある",
       ],
-      causes: ["導線設計不足", "訴求整理不足", "商談前後の判断基準が曖昧"],
-      direction: [
-        "まずは「誰に・何を・どう伝えるか」を整理し、売上につながる導線設計を見直すことが重要です。",
-        "広告改善より先に導線・接点・整理設計を見直すことで、次に改善すべき箇所が明確になります。",
+      checks: [
+        "広告配信後に流入や問い合わせが増えるか",
+        "流入後にLPや問い合わせ導線で離脱していないか",
+        "反応する層が想定ターゲットと合っているか",
+      ],
+      validation: [
+        "1ヶ月の広告配信を通じて、売上が伸びない理由が集客不足なのか、導線や訴求の問題なのかを整理できます。",
       ],
     },
-    contact: {
-      title: "見込み客との接点設計を見直したい状態です",
+    flow: {
+      title: "問い合わせ導線に離脱要因がありそうです",
       summary: [
-        "現在は、サービス自体の課題というより、見込み客との接点量や接点設計が不足している可能性があります。",
-        "良いサービスでも、比較検討の候補に入る機会が少ないと売上改善につながりにくくなります。",
+        "現状、クリックや閲覧はあっても、問い合わせ・購入までの導線で離脱している可能性があります。",
+        "広告検証では、流入後の行動を見ることで導線上の詰まりを確認できます。",
       ],
-      current: [
-        "どこで見込み客と接点を作るか、どの導線へつなげるかの設計を整理する余地があります。",
+      hypothesis: [
+        "クリックはされているのに問い合わせにつながらない場合、ページ構成・CTA・スマホUI・情報整理がボトルネックになっている可能性があります。",
       ],
-      problems: [
-        "認知が広がらない",
-        "流入数が安定しない",
-        "良いサービスでも比較対象に入らない",
+      states: [
+        "ページを見ても次に何をすべきか分かりにくい",
+        "CTAやフォームまでの流れに迷いがある",
+        "スマホ閲覧時の情報整理に改善余地がある",
       ],
-      causes: [
-        "接点不足",
-        "流入チャネルの偏り",
-        "LPや問い合わせ導線との接続不足",
+      checks: [
+        "広告流入後の離脱がどこで起きているか",
+        "CTAやフォームのクリックが発生しているか",
+        "スマホで迷わず行動できる構成になっているか",
       ],
-      direction: [
-        "まずは「どこで接点を作るか」を整理し、広告・SNS・LPなどの流入設計を見直すことが重要です。",
-        "単に露出を増やすのではなく、接点から相談までの流れを一つの導線として設計すると改善判断がしやすくなります。",
+      validation: [
+        "1ヶ月の広告配信で流入を作り、どの段階で離脱しているかを見ることで、導線改善の優先度を整理できます。",
+      ],
+    },
+    message: {
+      title: "訴求の伝わり方に改善余地があります",
+      summary: [
+        "現状、商品の価値や強みが十分に伝わる前に離脱されている可能性があります。",
+        "広告検証では、どの訴求に反応が出るかを比較しながら確認できます。",
+      ],
+      hypothesis: [
+        "商品自体に価値があっても、写真・実績・ベネフィット・比較優位が不足していると、検討前に離脱される可能性があります。",
+      ],
+      states: [
+        "強みが一言で伝わりにくい",
+        "写真・事例・実績などの判断材料が不足している",
+        "競合と比較した時の選ばれる理由が弱い",
+      ],
+      checks: [
+        "広告文ごとの反応差が出るか",
+        "LP上のファーストビューで価値が伝わっているか",
+        "ベネフィットや実績が問い合わせ前の不安を減らしているか",
+      ],
+      validation: [
+        "広告配信で複数の訴求を試すことで、どの伝え方が見込み客に届きやすいかを整理できます。",
+      ],
+    },
+    offer: {
+      title: "オファー条件が検討を重くしている可能性があります",
+      summary: [
+        "現状、興味は持たれていても、価格・条件・初回導線の重さが購入判断を妨げている可能性があります。",
+        "広告検証では、興味から相談まで進むかを見ながらオファーの重さを確認できます。",
+      ],
+      hypothesis: [
+        "価格の納得感、初回相談のハードル、購入条件などが原因で『今はいいかな』と判断されている可能性があります。",
+      ],
+      states: [
+        "興味は持たれているが行動につながりにくい",
+        "価格や条件の納得材料が不足している",
+        "初回相談や購入までの心理的ハードルが高い",
+      ],
+      checks: [
+        "広告流入後にCTAクリックが発生しているか",
+        "価格や条件の説明で離脱が起きていないか",
+        "初回相談の見せ方を軽くした時に反応が変わるか",
+      ],
+      validation: [
+        "広告配信を通じて、関心はあるのに行動が止まるのか、そもそも関心が弱いのかを切り分けられます。",
+      ],
+    },
+    target: {
+      title: "届ける相手にズレがある可能性があります",
+      summary: [
+        "現状、広告や訴求が本来届けるべき相手に届いていない可能性があります。",
+        "広告検証では、反応する層と成約しやすい層が一致しているかを確認できます。",
+      ],
+      hypothesis: [
+        "問い合わせはあるが成約しない、単価感が合わない場合、ターゲット設計や訴求対象がズレている可能性があります。",
+      ],
+      states: [
+        "問い合わせはあるが商談化・成約しにくい",
+        "反応する客層と本来狙いたい客層が違う",
+        "単価感や課題感が合わない問い合わせが発生している",
+      ],
+      checks: [
+        "広告配信で反応する属性が想定と合っているか",
+        "問い合わせ内容が成約しやすい条件と合っているか",
+        "訴求が広すぎてミスマッチを生んでいないか",
+      ],
+      validation: [
+        "1ヶ月の広告配信で反応する層を確認し、ターゲット設計と訴求対象のズレを整理できます。",
+      ],
+    },
+    trust: {
+      title: "信頼材料の不足が影響している可能性があります",
+      summary: [
+        "現状、比較検討段階で選ばれるための信頼材料が不足している可能性があります。",
+        "広告検証では、初見ユーザーが安心して問い合わせまで進めるかを確認できます。",
+      ],
+      hypothesis: [
+        "実績、会社感、事例、写真、プロフィールなどが不足していると、『良さそうだけど問い合わせるほどではない』と判断される可能性があります。",
+      ],
+      states: [
+        "初見で安心できる会社感が伝わりにくい",
+        "実績や事例が比較検討の材料として不足している",
+        "問い合わせ前の不安を減らす情報が少ない",
+      ],
+      checks: [
+        "実績・事例を見せた時に反応が変わるか",
+        "プロフィールや会社情報が不安解消に機能しているか",
+        "問い合わせ前に必要な判断材料が揃っているか",
+      ],
+      validation: [
+        "広告流入後の行動を見ることで、信頼材料の不足が離脱要因になっているかを整理できます。",
       ],
     },
     cycle: {
-      title: "改善サイクルを整える余地があります",
+      title: "改善判断が感覚頼りになっている可能性があります",
       summary: [
-        "現在は、改善施策そのものよりも「検証・改善を継続できる状態」が不足している可能性があります。",
-        "施策が単発で終わると、成果が出た理由・出なかった理由が残りにくく、次の判断が感覚的になりやすくなります。",
+        "現状、広告やSNS、導線改善の判断が数字ではなく感覚頼りになっている可能性があります。",
+        "広告検証では、どこを直すべきかを数値で確認するための土台を作れます。",
       ],
-      current: [
-        "現状把握、改善優先度、検証の流れを整理することで、再現性のある改善に近づける状態です。",
+      hypothesis: [
+        "施策を動かしていても、数字を見た改善ができていない場合、どこを直すべきか分からない状態になっている可能性があります。",
       ],
-      problems: [
-        "感覚的な判断になりやすい",
-        "改善施策が単発で終わる",
-        "成果の再現性が低くなる",
+      states: [
+        "改善施策が単発で終わりやすい",
+        "成果判断が感覚的になっている",
+        "広告・導線・訴求のどこが課題か分かりにくい",
       ],
-      causes: ["改善優先度不明", "数値確認の不足", "検証フローの属人化"],
-      direction: [
-        "まずは現状を整理し、「何を改善すべきか」を明確化した上で、継続的に検証できる状態を作ることが重要です。",
-        "小さな検証を積み上げられる形にすると、広告・導線・訴求のどこに改善余地があるかを判断しやすくなります。",
+      checks: [
+        "流入・クリック・問い合わせのどこで差が出るか",
+        "広告文やLP変更による反応差を確認できているか",
+        "改善判断に使う数字が整理されているか",
       ],
-    },
-    ads: {
-      title: "広告成果の可視化を整えたい状態です",
-      summary: [
-        "現在は、広告成果や数値の把握不足によって、改善判断が難しくなっている可能性があります。",
-        "数値が見えないまま運用すると、広告費の最適化や導線改善の優先順位が曖昧になりやすくなります。",
-      ],
-      current: [
-        "広告の成果だけでなく、その後の導線・訴求・問い合わせ状況まで含めて整理する余地があります。",
-      ],
-      problems: [
-        "広告費の最適化ができない",
-        "成果判断が感覚的になる",
-        "改善ポイントが見えづらい",
-      ],
-      causes: ["広告成果の可視化不足", "計測設計不足", "導線全体との接続不足"],
-      direction: [
-        "まずは広告成果を可視化し、「どこに課題があるか」を整理することが重要です。",
-        "広告単体ではなく、導線・訴求・設計全体を含めて見ることで、改善すべきポイントが明確になります。",
+      validation: [
+        "1ヶ月の広告配信を通じて、集客・導線・訴求のどこに改善余地があるかを数値ベースで整理できます。",
       ],
     },
   };
@@ -172,10 +278,13 @@ function initDiagnosis() {
   const state = {
     currentQuestion: 0,
     scores: {
+      traffic: 0,
       flow: 0,
-      contact: 0,
+      message: 0,
+      offer: 0,
+      target: 0,
+      trust: 0,
       cycle: 0,
-      ads: 0,
     },
   };
 
@@ -285,8 +394,8 @@ function initDiagnosis() {
   }
 
   function showAnalysis() {
-    progressLabel.textContent = "質問 5 / 5";
-    progressPhase.textContent = "課題整理中";
+    progressLabel.textContent = `質問 ${questions.length} / ${questions.length}`;
+    progressPhase.textContent = "仮説整理中";
     updateProgress(100);
     analysisMessage.textContent = getAnalysisMessage();
     questionScreen.classList.remove("screen--active");
@@ -301,15 +410,15 @@ function initDiagnosis() {
 
     diagnosisCard.dataset.tempo = "report";
     progressLabel.textContent = "整理完了";
-    progressPhase.textContent = "分析レポート";
+    progressPhase.textContent = "仮説レポート";
     updateProgress(100);
 
     document.getElementById("result-title").textContent = result.title;
     renderParagraphs("result-summary", result.summary);
-    renderParagraphs("result-current", result.current);
-    renderList("result-problems", result.problems);
-    renderList("result-causes", result.causes);
-    renderParagraphs("result-direction", result.direction);
+    renderParagraphs("result-current", result.hypothesis);
+    renderList("result-problems", result.states);
+    renderList("result-causes", result.checks);
+    renderParagraphs("result-direction", result.validation);
 
     questionScreen.classList.remove("screen--active");
     analysisScreen.classList.remove("screen--active", "screen--fade-in");
