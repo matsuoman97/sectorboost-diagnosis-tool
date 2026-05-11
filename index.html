@@ -1,1 +1,129 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="SectorBoost公式サイトに埋め込むための売上課題簡易診断ツール"
+    />
+    <title>SectorBoost 売上課題整理ツール</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="sb-page" id="sectorboost-diagnosis">
+      <section class="diagnosis" aria-labelledby="diagnosis-title">
+        <div class="diagnosis__header">
+          <p class="eyebrow">SectorBoost Diagnosis</p>
+          <h1 id="diagnosis-title">売上課題を1分で整理</h1>
+          <p class="lead">
+            集客・導線・訴求・信頼材料を確認し、売上ボトルネックの仮説を整理します。
+          </p>
+        </div>
 
+        <noscript>
+          <p class="noscript-message">
+            診断ツールを利用するには、ブラウザのJavaScriptを有効にしてください。
+          </p>
+        </noscript>
+
+        <div class="diagnosis__card" id="diagnosis-app">
+          <div class="progress" aria-label="診断の進捗">
+            <div class="progress__meta">
+              <span id="progress-label">質問 1 / 7</span>
+              <span id="progress-phase">流入確認</span>
+            </div>
+            <div class="progress__track" aria-hidden="true">
+              <span
+                class="progress__bar"
+                id="progress-bar"
+                style="width: 14%"
+              ></span>
+            </div>
+          </div>
+
+          <div class="screen screen--active" id="question-screen">
+            <p class="question__tag" id="question-tag">Q1 / 集客</p>
+            <h2 class="question__title" id="question-title">
+              新規の流入は安定していますか？
+            </h2>
+            <div
+              class="answers"
+              id="answers"
+              role="group"
+              aria-labelledby="question-title"
+            ></div>
+          </div>
+
+          <div
+            class="screen analysis-screen"
+            id="analysis-screen"
+            aria-live="polite"
+          >
+            <p class="analysis-screen__label">整理中</p>
+            <h2>分析中...</h2>
+            <p id="analysis-message">売上構造の仮説を整理中…</p>
+          </div>
+
+          <div
+            class="screen result-proposal"
+            id="result-screen"
+            aria-live="polite"
+          >
+            <p class="result__label">SectorBoost ボトルネック仮説レポート</p>
+            <h2 class="result__title" id="result-title"></h2>
+            <div class="result__summary" id="result-summary"></div>
+
+            <div class="proposal-list">
+              <article class="proposal-section">
+                <span class="proposal-section__number">01</span>
+                <h3>ボトルネック仮説</h3>
+                <div id="result-current"></div>
+              </article>
+              <article class="proposal-section proposal-section--plain">
+                <span class="proposal-section__number">02</span>
+                <h3>起きていそうな状態</h3>
+                <ul id="result-problems"></ul>
+              </article>
+              <article class="proposal-section proposal-section--plain">
+                <span class="proposal-section__number">03</span>
+                <h3>確認すべきポイント</h3>
+                <ul id="result-causes"></ul>
+              </article>
+              <article class="proposal-section proposal-section--support">
+                <span class="proposal-section__number">04</span>
+                <h3>Sector Boostで検証できること</h3>
+                <div id="result-direction"></div>
+              </article>
+            </div>
+
+            <div class="cta-panel" id="contact">
+              <p class="cta-panel__note">
+                まだ課題が明確でない段階でも問題ありません。無理な広告提案ではなく、ボトルネック仮説ベースでお話しています。
+              </p>
+              <p class="cta-panel__lead">
+                本当に詰まっている箇所を、広告配信と導線確認で一緒に整理しませんか。
+              </p>
+              <a
+                class="cta-button"
+                href="https://sectorboost.jp/"
+                aria-label="SectorBoostに課題整理の相談をする"
+              >
+                現状整理について相談する
+              </a>
+              <button
+                class="secondary-button"
+                type="button"
+                id="restart-button"
+              >
+                もう一度診断する
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js" defer></script>
+  </body>
+</html>
