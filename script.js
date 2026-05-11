@@ -300,10 +300,7 @@ function initDiagnosis() {
   const answersContainer = document.getElementById("answers");
   const analysisMessage = document.getElementById("analysis-message");
   const pdfButton = document.getElementById("pdf-button");
-  const consultationToggle = document.getElementById("consultation-toggle");
-  const consultationForm = document.getElementById("consultation-form");
   const restartButton = document.getElementById("restart-button");
-  let currentResult = null;
 
   function scrollToTop() {
     document
@@ -397,45 +394,6 @@ function initDiagnosis() {
     });
   }
 
-  function buildMailBody(formData) {
-    const lines = [
-      "SectorBoost ボトルネック検証相談",
-      "",
-      `会社名: ${formData.get("company")}`,
-      `お名前: ${formData.get("name")}`,
-      `メールアドレス: ${formData.get("email")}`,
-      `相談内容: ${formData.get("message") || "未入力"}`,
-      "",
-      "--- 診断結果 ---",
-      `診断結果タイトル: ${currentResult.title}`,
-      "",
-      "ボトルネック仮説:",
-      ...currentResult.hypothesis.map((item) => `・${item}`),
-      "",
-      "起きていそうな状態:",
-      ...currentResult.states.map((item) => `・${item}`),
-      "",
-      "確認すべきポイント:",
-      ...currentResult.checks.map((item) => `・${item}`),
-      "",
-      "Sector Boostで検証できること:",
-      ...currentResult.validation.map((item) => `・${item}`),
-    ];
-
-    return lines.join("\n");
-  }
-
-  function closeConsultationForm() {
-    consultationForm.hidden = true;
-    consultationToggle.setAttribute("aria-expanded", "false");
-  }
-
-  function openConsultationForm() {
-    consultationForm.hidden = false;
-    consultationToggle.setAttribute("aria-expanded", "true");
-    consultationForm.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
   function showAnalysis() {
     progressLabel.textContent = `質問 ${questions.length} / ${questions.length}`;
     progressPhase.textContent = "仮説整理中";
@@ -450,7 +408,6 @@ function initDiagnosis() {
 
   function showResult() {
     const result = results[getPrimaryResultType()];
-    currentResult = result;
 
     diagnosisCard.dataset.tempo = "report";
     progressLabel.textContent = "整理完了";
@@ -476,37 +433,12 @@ function initDiagnosis() {
       state.scores[key] = 0;
     });
 
-    currentResult = null;
-    closeConsultationForm();
-    consultationForm.reset();
     analysisScreen.classList.remove("screen--active", "screen--fade-in");
     resultScreen.classList.remove("screen--active", "screen--fade-in");
     questionScreen.classList.add("screen--active");
     renderQuestion();
     scrollToTop();
   }
-
-  consultationToggle.addEventListener("click", () => {
-    if (consultationForm.hidden) {
-      openConsultationForm();
-      return;
-    }
-
-    closeConsultationForm();
-  });
-
-  consultationForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    if (!consultationForm.reportValidity() || !currentResult) {
-      return;
-    }
-
-    const formData = new FormData(consultationForm);
-    const subject = encodeURIComponent("SectorBoost ボトルネック検証相談");
-    const body = encodeURIComponent(buildMailBody(formData));
-    window.location.href = `mailto:info@sectorboost.jp?subject=${subject}&body=${body}`;
-  });
 
   pdfButton.addEventListener("click", () => {
     window.print();
