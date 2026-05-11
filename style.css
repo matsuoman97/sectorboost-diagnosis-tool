@@ -347,11 +347,11 @@ h1 {
 .cta-panel {
   display: grid;
   gap: 18px;
-  padding: 26px 22px 24px;
-  border: 1px solid #2b2b2b;
+  padding: 28px 22px 24px;
+  border: 1px solid #343434;
   border-radius: var(--radius-lg);
   color: #ffffff;
-  background: #181818;
+  background: #1b1b1b;
 }
 
 .cta-panel p {
@@ -368,6 +368,15 @@ h1 {
   font-weight: 700;
 }
 
+.cta-panel__checks {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 1.2em;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
+}
+
 .cta-button,
 .secondary-button {
   display: inline-flex;
@@ -382,9 +391,9 @@ h1 {
 .cta-button {
   width: 100%;
   padding: 0 24px;
-  border: 1px solid #ffffff;
+  border: 1px solid #f7f7f3;
   color: var(--color-dark);
-  background: #ffffff;
+  background: #f7f7f3;
   font-weight: 700;
 }
 
@@ -394,9 +403,9 @@ h1 {
   justify-self: center;
   padding: 2px 4px;
   border: 0;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.42);
   background: transparent;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
 }
 
 @media (min-width: 720px) {
@@ -436,7 +445,8 @@ h1 {
   }
 
   .cta-panel__note,
-  .cta-panel__lead {
+  .cta-panel__lead,
+  .cta-panel__checks {
     grid-column: 1 / -1;
   }
 
