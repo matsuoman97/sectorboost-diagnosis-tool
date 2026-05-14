@@ -253,23 +253,25 @@ h1 {
 }
 
 .result-proposal {
-  padding-top: 12px;
+  padding-top: 8px;
 }
 
 .result__label {
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
 .result__title {
-  margin-bottom: 18px;
+  margin-bottom: 14px;
+  line-height: 1.32;
 }
 
 .result__summary {
   display: grid;
-  gap: 10px;
-  margin-bottom: 30px;
+  gap: 8px;
+  margin-bottom: 22px;
   color: var(--color-muted);
-  font-size: 1rem;
+  font-size: 0.96rem;
+  line-height: 1.68;
 }
 
 .result__summary p {
@@ -278,12 +280,12 @@ h1 {
 
 .proposal-list {
   display: grid;
-  gap: 14px;
-  margin-bottom: 24px;
+  gap: 12px;
+  margin-bottom: 22px;
 }
 
 .proposal-section {
-  padding: 22px;
+  padding: 18px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
@@ -314,7 +316,7 @@ h1 {
 
 .proposal-section__number {
   display: inline-block;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   color: var(--color-muted);
   font-size: 0.76rem;
   font-weight: 800;
@@ -322,15 +324,16 @@ h1 {
 }
 
 .proposal-section h3 {
-  margin-bottom: 12px;
-  font-size: 1.04rem;
+  margin-bottom: 10px;
+  font-size: 1rem;
   letter-spacing: -0.02em;
 }
 
 .proposal-section p,
 .proposal-section li {
   color: var(--color-muted);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  line-height: 1.65;
 }
 
 .proposal-section p:last-child {
@@ -339,9 +342,13 @@ h1 {
 
 .proposal-section ul {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   margin: 0;
   padding-left: 1.2em;
+}
+
+.proposal-section p {
+  margin-bottom: 0;
 }
 
 .cta-panel {
