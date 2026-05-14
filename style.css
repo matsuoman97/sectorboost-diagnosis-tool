@@ -336,6 +336,10 @@ h1 {
   line-height: 1.65;
 }
 
+.proposal-section p {
+  margin-bottom: 0;
+}
+
 .proposal-section p:last-child {
   margin-bottom: 0;
 }
@@ -345,10 +349,6 @@ h1 {
   gap: 6px;
   margin: 0;
   padding-left: 1.2em;
-}
-
-.proposal-section p {
-  margin-bottom: 0;
 }
 
 .cta-panel {
