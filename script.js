@@ -8,6 +8,7 @@ function initDiagnosis() {
     "trust",
     "cycle",
   ];
+
   const phases = [
     "流入確認",
     "導線確認",
@@ -17,6 +18,7 @@ function initDiagnosis() {
     "信頼確認",
     "検証確認",
   ];
+
   const analysisMessages = [
     "売上構造の仮説を整理中…",
     "導線と接点の関係を確認中…",
@@ -56,10 +58,7 @@ function initDiagnosis() {
         { label: "一言で伝わる", scores: {} },
         { label: "概ね伝わっている", scores: { message: 2 } },
         { label: "少し伝わりにくい", scores: { message: 3 } },
-        {
-          label: "実績・事例の補足が必要",
-          scores: { message: 2, trust: 2 },
-        },
+        { label: "実績・事例の補足が必要", scores: { message: 2, trust: 2 } },
       ],
     },
     {
@@ -80,10 +79,7 @@ function initDiagnosis() {
       answers: [
         { label: "おおむね一致している", scores: {} },
         { label: "少しズレがありそう", scores: { target: 2 } },
-        {
-          label: "問い合わせ後にズレやすい",
-          scores: { target: 3, flow: 1 },
-        },
+        { label: "問い合わせ後にズレやすい", scores: { target: 3, flow: 1 } },
         { label: "まだ判断できていない", scores: { target: 2, cycle: 1 } },
       ],
     },
@@ -352,6 +348,7 @@ function initDiagnosis() {
     Object.entries(answer.scores).forEach(([type, score]) => {
       state.scores[type] += score;
     });
+
     state.currentQuestion += 1;
 
     if (state.currentQuestion >= questions.length) {
@@ -399,6 +396,7 @@ function initDiagnosis() {
     progressPhase.textContent = "仮説整理中";
     updateProgress(100);
     analysisMessage.textContent = getAnalysisMessage();
+
     questionScreen.classList.remove("screen--active");
     analysisScreen.classList.add("screen--active", "screen--fade-in");
     scrollToTop();
@@ -429,6 +427,7 @@ function initDiagnosis() {
 
   function restartDiagnosis() {
     state.currentQuestion = 0;
+
     Object.keys(state.scores).forEach((key) => {
       state.scores[key] = 0;
     });
@@ -436,6 +435,7 @@ function initDiagnosis() {
     analysisScreen.classList.remove("screen--active", "screen--fade-in");
     resultScreen.classList.remove("screen--active", "screen--fade-in");
     questionScreen.classList.add("screen--active");
+
     renderQuestion();
     scrollToTop();
   }
@@ -445,6 +445,7 @@ function initDiagnosis() {
   });
 
   restartButton.addEventListener("click", restartDiagnosis);
+
   renderQuestion();
 }
 

@@ -8,14 +8,17 @@
       content="SectorBoost公式サイトに埋め込むための売上課題簡易診断ツール"
     />
     <title>SectorBoost 売上課題整理ツール</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./style.css?v=4" />
   </head>
+
   <body>
     <main class="sb-page" id="sectorboost-diagnosis">
       <section class="diagnosis" aria-labelledby="diagnosis-title">
         <div class="diagnosis__header">
           <p class="eyebrow">SectorBoost Diagnosis</p>
+
           <h1 id="diagnosis-title">売上課題を1分で整理</h1>
+
           <p class="lead">
             集客・導線・訴求・信頼材料を確認し、売上ボトルネックの仮説を整理します。
           </p>
@@ -33,6 +36,7 @@
               <span id="progress-label">質問 1 / 7</span>
               <span id="progress-phase">流入確認</span>
             </div>
+
             <div class="progress__track" aria-hidden="true">
               <span
                 class="progress__bar"
@@ -44,9 +48,11 @@
 
           <div class="screen screen--active" id="question-screen">
             <p class="question__tag" id="question-tag">Q1 / 集客</p>
+
             <h2 class="question__title" id="question-title">
               新規の流入は安定していますか？
             </h2>
+
             <div
               class="answers"
               id="answers"
@@ -61,7 +67,9 @@
             aria-live="polite"
           >
             <p class="analysis-screen__label">整理中</p>
+
             <h2>分析中...</h2>
+
             <p id="analysis-message">売上構造の仮説を整理中…</p>
           </div>
 
@@ -70,8 +78,12 @@
             id="result-screen"
             aria-live="polite"
           >
-            <p class="result__label">SectorBoost ボトルネック仮説レポート</p>
+            <p class="result__label">
+              SectorBoost ボトルネック仮説レポート
+            </p>
+
             <h2 class="result__title" id="result-title"></h2>
+
             <div class="result__summary" id="result-summary"></div>
 
             <div class="proposal-list">
@@ -80,19 +92,22 @@
                 <h3>ボトルネック仮説</h3>
                 <div id="result-current"></div>
               </article>
+
               <article class="proposal-section proposal-section--plain">
                 <span class="proposal-section__number">02</span>
                 <h3>起きていそうな状態</h3>
                 <ul id="result-problems"></ul>
               </article>
+
               <article class="proposal-section proposal-section--plain">
                 <span class="proposal-section__number">03</span>
                 <h3>確認すべきポイント</h3>
                 <ul id="result-causes"></ul>
               </article>
+
               <article class="proposal-section proposal-section--support">
                 <span class="proposal-section__number">04</span>
-                <h3>次に切り分けること</h3>
+                <h3>Sector Boostで検証できること</h3>
                 <div id="result-direction"></div>
               </article>
             </div>
@@ -101,9 +116,11 @@
               <p class="cta-panel__note">
                 診断だけでは、本当のボトルネックまでは断定できません。
               </p>
+
               <p class="cta-panel__lead">
                 次は、仮説を小さく検証し、どこから整えるべきかを切り分ける段階です。
               </p>
+
               <ul
                 class="cta-panel__checks"
                 aria-label="Sector Boostで検証する内容"
@@ -112,16 +129,19 @@
                 <li>導線で止まっているのか</li>
                 <li>訴求や信頼材料がズレているのか</li>
               </ul>
+
               <a
                 class="cta-button"
                 href="https://sectorboost.jp/consultation/"
                 aria-label="SectorBoostにボトルネック検証の相談をする"
               >
-                ボトルネック検証について相談する →
+                ボトルネック検証について相談する
               </a>
+
               <button class="print-button" type="button" id="pdf-button">
                 結果をPDF保存
               </button>
+
               <button
                 class="secondary-button"
                 type="button"
@@ -135,6 +155,6 @@
       </section>
     </main>
 
-    <script src="./script.js" defer></script>
+    <script src="./script.js?v=4" defer></script>
   </body>
 </html>
