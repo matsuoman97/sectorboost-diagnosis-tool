@@ -8,7 +8,7 @@
       content="SectorBoost公式サイトに埋め込むための売上ボトルネック仮説整理レポート"
     />
     <title>SectorBoost 売上課題整理ツール</title>
-    <link rel="stylesheet" href="./style.css?v=5" />
+    <link rel="stylesheet" href="./style.css?v=7" />
   </head>
 
   <body>
@@ -78,47 +78,58 @@
             id="result-screen"
             aria-live="polite"
           >
-            <p class="result__label">今回もっとも強く出ているサイン</p>
+            <div class="result-hero">
+              <p class="result__label">売上ボトルネック仮説整理レポート</p>
+              <p class="result__sub-label">回答から見えた主要サイン</p>
 
-            <h2 class="result__title" id="result-title"></h2>
+              <h2 class="result__title" id="result-title"></h2>
 
-            <div class="result__summary" id="result-summary"></div>
+              <div class="result__summary" id="result-summary"></div>
+            </div>
 
             <div class="proposal-list">
-              <article class="proposal-section">
+              <article class="proposal-section proposal-section--flow">
                 <span class="proposal-section__number">01</span>
-                <h3>現時点の仮説</h3>
+                <h3>ユーザー心理の流れ</h3>
+                <ol class="psych-flow" id="result-flow"></ol>
+              </article>
+
+              <article class="proposal-section">
+                <span class="proposal-section__number">02</span>
+                <h3>この状態が示す仮説</h3>
                 <div id="result-current"></div>
               </article>
 
               <article class="proposal-section proposal-section--plain">
-                <span class="proposal-section__number">02</span>
+                <span class="proposal-section__number">03</span>
                 <h3>いま起きていそうなこと</h3>
                 <ul id="result-problems"></ul>
               </article>
 
               <article class="proposal-section proposal-section--plain">
-                <span class="proposal-section__number">03</span>
-                <h3>次に確認すべきこと</h3>
+                <span class="proposal-section__number">04</span>
+                <h3>次に確認したいこと</h3>
                 <ul id="result-causes"></ul>
               </article>
 
               <article class="proposal-section proposal-section--support">
-                <span class="proposal-section__number">04</span>
+                <span class="proposal-section__number">05</span>
                 <h3>広告検証で切り分けること</h3>
                 <div id="result-direction"></div>
               </article>
             </div>
 
-            <div class="report-note">
-              <p class="report-note__label">このレポートの位置づけ</p>
+            <div class="next-focus">
+              <p class="next-focus__label">次に整理すべき観点</p>
 
-              <p class="report-note__lead">
-                ここでは原因を断定せず、回答から見えたボトルネック候補を整理しています。
-              </p>
+              <ul class="next-focus__list">
+                <li>どの訴求で反応が変わるか</li>
+                <li>どの導線で離脱しているか</li>
+                <li>判断材料は足りているか</li>
+              </ul>
 
-              <p class="report-note__text">
-                実際の優先順位は、流入・導線・訴求ごとの反応差を見ながら切り分ける必要があります。
+              <p class="next-focus__note">
+                このレポートは原因を断定するものではなく、次に見るべき観点を整理するためのメモです。
               </p>
             </div>
 
@@ -140,6 +151,6 @@
       </section>
     </main>
 
-    <script src="./script.js?v=5" defer></script>
+    <script src="./script.js?v=7" defer></script>
   </body>
 </html>
