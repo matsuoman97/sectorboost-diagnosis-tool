@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="SectorBoost公式サイトに埋め込むための売上課題簡易診断ツール"
+      content="SectorBoost公式サイトに埋め込むための売上ボトルネック仮説整理レポート"
     />
     <title>SectorBoost 売上課題整理ツール</title>
-    <link rel="stylesheet" href="./style.css?v=4" />
+    <link rel="stylesheet" href="./style.css?v=7" />
   </head>
 
   <body>
@@ -78,66 +78,62 @@
             id="result-screen"
             aria-live="polite"
           >
-            <p class="result__label">
-              SectorBoost ボトルネック仮説レポート
-            </p>
+            <div class="result-hero">
+              <p class="result__label">売上ボトルネック仮説整理レポート</p>
+              <p class="result__sub-label">回答から見えた主要サイン</p>
 
-            <h2 class="result__title" id="result-title"></h2>
+              <h2 class="result__title" id="result-title"></h2>
 
-            <div class="result__summary" id="result-summary"></div>
+              <div class="result__summary" id="result-summary"></div>
+            </div>
 
             <div class="proposal-list">
-              <article class="proposal-section">
+              <article class="proposal-section proposal-section--flow">
                 <span class="proposal-section__number">01</span>
-                <h3>ボトルネック仮説</h3>
+                <h3>ユーザー心理の流れ</h3>
+                <ol class="psych-flow" id="result-flow"></ol>
+              </article>
+
+              <article class="proposal-section">
+                <span class="proposal-section__number">02</span>
+                <h3>この状態が示す仮説</h3>
                 <div id="result-current"></div>
               </article>
 
               <article class="proposal-section proposal-section--plain">
-                <span class="proposal-section__number">02</span>
-                <h3>起きていそうな状態</h3>
+                <span class="proposal-section__number">03</span>
+                <h3>いま起きていそうなこと</h3>
                 <ul id="result-problems"></ul>
               </article>
 
               <article class="proposal-section proposal-section--plain">
-                <span class="proposal-section__number">03</span>
-                <h3>確認すべきポイント</h3>
+                <span class="proposal-section__number">04</span>
+                <h3>次に確認したいこと</h3>
                 <ul id="result-causes"></ul>
               </article>
 
               <article class="proposal-section proposal-section--support">
-                <span class="proposal-section__number">04</span>
-                <h3>Sector Boostで検証できること</h3>
+                <span class="proposal-section__number">05</span>
+                <h3>広告検証で切り分けること</h3>
                 <div id="result-direction"></div>
               </article>
             </div>
 
-            <div class="cta-panel" id="contact">
-              <p class="cta-panel__note">
-                診断だけでは、本当のボトルネックまでは断定できません。
-              </p>
+            <div class="next-focus">
+              <p class="next-focus__label">次に整理すべき観点</p>
 
-              <p class="cta-panel__lead">
-                次は、仮説を小さく検証し、どこから整えるべきかを切り分ける段階です。
-              </p>
-
-              <ul
-                class="cta-panel__checks"
-                aria-label="Sector Boostで検証する内容"
-              >
-                <li>接点が足りないのか</li>
-                <li>導線で止まっているのか</li>
-                <li>訴求や信頼材料がズレているのか</li>
+              <ul class="next-focus__list">
+                <li>どの訴求で反応が変わるか</li>
+                <li>どの導線で離脱しているか</li>
+                <li>判断材料は足りているか</li>
               </ul>
 
-              <a
-                class="cta-button"
-                href="https://sectorboost.jp/consultation/"
-                aria-label="SectorBoostにボトルネック検証の相談をする"
-              >
-                ボトルネック検証について相談する
-              </a>
+              <p class="next-focus__note">
+                このレポートは原因を断定するものではなく、次に見るべき観点を整理するためのメモです。
+              </p>
+            </div>
 
+            <div class="result-actions" aria-label="レポート操作">
               <button class="print-button" type="button" id="pdf-button">
                 結果をPDF保存
               </button>
@@ -147,7 +143,7 @@
                 type="button"
                 id="restart-button"
               >
-                もう一度診断する
+                もう一度整理する
               </button>
             </div>
           </div>
@@ -155,6 +151,6 @@
       </section>
     </main>
 
-    <script src="./script.js?v=4" defer></script>
+    <script src="./script.js?v=7" defer></script>
   </body>
 </html>
